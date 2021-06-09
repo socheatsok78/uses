@@ -1,36 +1,45 @@
-# uses
+# My current setup
 
-Here my development stacks:
+I mainly program JavaScript and PHP. Mostly I develop in Visual Studio Code. Here's a screenshot of it:
 
-## Hardware
+![Visual Studio Code](https://user-images.githubusercontent.com/4363857/121340724-20346680-c94a-11eb-87ba-969da9440b88.png)
 
-#### MacBook Pro (16-inch, 2019)
+As a geek and web developer, I use a lot of software and hardware on a regular basis...
 
-- **Operating System**: macOS Catalina 10.15.7
-- **Processor**: 2.6 GHz 6-Core Intel Core i7
-- **Memory**: 16 GB 2667 MHz DDR4
-- **Graphics**:
-  - AMD Radeon Pro 5300M 4 GB
-  - Intel UHD Graphics 630 1536 MB
-  
 ## Software
 
-- Affinity
-- Docker
-- Dozer
-- Kubernetes
-- Fork
-- Insomnia
-- Iterm
-- Notion
-- Postman
-- Postwoman
-- TablePlus
-- Umbra
-- Visual Studio Code
-- Xcode
+- [Visual Studio Code](https://code.visualstudio.com/) — For Front-end development and general text editor.
+- [iTerm](https://iterm2.com/) with [oh-my-zsh](https://ohmyz.sh/) — My go-to choice for terminal.
+- [Chrome](https://chrome.com) - Both for personal browsing and developing/debugging web apps.
 
-## Terminal
+## Web Apps and Services
 
-- ZSH
-- OhMyZSH
+- [GitHub][github-url] — GitHub for personal and work.
+- [DigitalOcean][digitalocean-referral-url] — Cloud services / hosting for apps I develop.
+- [Twitter][twitter-url], [Reddit][reddit-url] - Mostly for following along with what is happening in the world, tech or otherwise.
+
+
+## Hardware / Gear
+
+I'm currently using **MacBook Pro (16-inch, 2019) 16GB** and office supplied **MacBook Pro (16-inch, 2020) 16GB** for work.
+
+- **Monitor**: Asus VG27A 27-inch (2560 × 1440)
+- **Keyboard**: Royal Kludge RK71 with Pom Jelly keycaps
+- **Mouse**: Razer Mamba Elite
+
+### Phones
+
+- iPhone 12 Pro Max (Primary)
+- iPhone 7 (Testing)
+- Samsung Galaxy J7 Duo (Testing)
+
+### Gaming
+
+Just a **Sony PS4 Pro** occasionally playing [Fortnite](https://www.epicgames.com/fortnite/en-US/home) with family members.
+
+- **Speaker**: Logitech G560 Gaming Speaker
+
+[github-url]: https://github.com/socheatsok78
+[twitter-url]: https://twitter.com/socheatsok78
+[reddit-url]: https://reddit.com/user/socheatsok78
+[digitalocean-referral-url]: https://m.do.co/c/dc256cbe7df7
