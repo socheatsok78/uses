@@ -1,10 +1,20 @@
 # My current setup
 
-I mainly program JavaScript and PHP. Mostly I develop in Visual Studio Code. Here's a screenshot of it:
+I mainly program **JavaScript** and **PHP** and doing **DevOps**. Mostly I develop in **Visual Studio Code**. Here's a screenshot of it:
 
 ![Visual Studio Code](https://user-images.githubusercontent.com/4363857/121340724-20346680-c94a-11eb-87ba-969da9440b88.png)
 
 As a geek and web developer, I use a lot of software and hardware on a regular basis...
+
+### Preferred web stack
+
+- [Vue.js](https://vuejs.org) — UI Framework
+- [Vercel](https://vercel.com/) — Static / Serverless Deployment & CDN
+
+**I also use**
+
+- [Laravel](https://laravel.com) — The PHP Framework for Web Artisans 
+- [TypeScript](https://www.typescriptlang.org/) — Typed Superset of JavaScript
 
 ## Software
 
