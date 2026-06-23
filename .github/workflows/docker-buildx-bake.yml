@@ -63,7 +63,7 @@ jobs:
 
       - name: Generate GitHub metadata
         id: github-meta
-        uses: dockerbakery/github-metadata-action@v4
+        uses: dockerbakery/github-metadata-action@v5
 
       - if: ${{ inputs.permit-login }}
         name: Login to Docker Hub
