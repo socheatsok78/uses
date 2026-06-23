@@ -40,6 +40,10 @@ on:
         type: boolean
         default: false
         description: 'Permit using GitHub Actions cache for buildx'
+    secrets:
+      BUILDX_BAKE_GIT_AUTH_TOKEN:
+        description: 'Git authentication token for private repositories'
+        required: false
 
 jobs:
   build:
@@ -47,6 +51,8 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      BUILDX_BAKE_GIT_AUTH_TOKEN: ${{ secrets.BUILDX_BAKE_GIT_AUTH_TOKEN || github.token }}
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
