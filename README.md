@@ -28,5 +28,6 @@ jobs:
       contents: read
       packages: write
     with:
-      push: ${{ github.event_name != 'pull_request' }}
+      permit-login: ${{ github.event_name != 'pull_request' }}
+      permit-push: ${{ github.event_name != 'pull_request' }}
 ```
