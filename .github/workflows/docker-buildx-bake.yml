@@ -41,8 +41,11 @@ on:
         default: false
         description: 'Permit using GitHub Actions cache for buildx'
     secrets:
+      BUILDX_BAKE_GITHUB_TOKEN:
+        description: 'GitHub token for private repositories (default: github.token)'
+        required: false
       BUILDX_BAKE_GIT_AUTH_TOKEN:
-        description: 'Git authentication token for private repositories'
+        description: 'Git authentication token for private repositories (default: github.token)'
         required: false
 
 jobs:
@@ -80,7 +83,7 @@ jobs:
       - name: Build and push
         uses: docker/bake-action@v7
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.BUILDX_BAKE_GITHUB_TOKEN || github.token }}
           BUILDX_BAKE_GIT_AUTH_TOKEN: ${{ secrets.BUILDX_BAKE_GIT_AUTH_TOKEN || github.token }}
         with:
           targets: ${{ inputs.targets }}
