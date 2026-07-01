@@ -81,6 +81,8 @@ jobs:
 
       - name: Build and push
         uses: docker/bake-action@v7
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           targets: ${{ inputs.targets }}
           push: ${{ inputs.permit-login && inputs.permit-push }}
