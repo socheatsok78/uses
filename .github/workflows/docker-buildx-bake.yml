@@ -51,8 +51,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    env:
-      BUILDX_BAKE_GIT_AUTH_TOKEN: ${{ secrets.BUILDX_BAKE_GIT_AUTH_TOKEN || github.token }}
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
@@ -83,6 +81,7 @@ jobs:
         uses: docker/bake-action@v7
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          BUILDX_BAKE_GIT_AUTH_TOKEN: ${{ secrets.BUILDX_BAKE_GIT_AUTH_TOKEN || github.token }}
         with:
           targets: ${{ inputs.targets }}
           push: ${{ inputs.permit-login && inputs.permit-push }}
