@@ -1,0 +1,15 @@
+name: Docker Triage action
+description: A GitHub Action to triage Docker images using Buildx Bake.
+
+outputs:
+  bake-file:
+    description: Bake definition file
+    value: ${{ steps.meta.outputs.bake-file }}
+
+runs:
+  using: composite
+  steps:
+    - name: Docker Triage action
+      id: meta
+      run: ${{ github.action_path }}/docker-triage-action.sh
+      shell: bash
