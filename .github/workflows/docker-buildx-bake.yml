@@ -48,12 +48,13 @@ on:
         description: 'Git HTTP authentication token for remote Bake files. (default: github.token)'
         required: false
 
+permissions: 
+  contents: read
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
