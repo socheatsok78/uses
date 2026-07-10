@@ -40,13 +40,11 @@ on:
         type: boolean
         default: false
         description: 'Permit using GitHub Actions cache for buildx'
-    secrets:
-      BUILDX_BAKE_GITHUB_TOKEN:
+      github-token:
+        type: string
         description: 'GitHub token for private repositories (default: github.token)'
         required: false
-      BUILDX_BAKE_GIT_AUTH_TOKEN:
-        description: 'Git authentication token for private repositories (default: github.token)'
-        required: false
+        default: ${{ github.token }}
 
 jobs:
   build:
@@ -71,6 +69,8 @@ jobs:
       - name: Generate GitHub metadata
         id: github-meta
         uses: dockerbakery/github-metadata-action@v5
+        with:
+          token: ${{ inputs.github-token }}
 
       - if: ${{ inputs.permit-login }}
         name: Login to GitHub Container Registry (ghcr.io)
@@ -82,9 +82,6 @@ jobs:
 
       - name: Build and push
         uses: docker/bake-action@v7
-        env:
-          GITHUB_TOKEN: ${{ secrets.BUILDX_BAKE_GITHUB_TOKEN || github.token }}
-          BUILDX_BAKE_GIT_AUTH_TOKEN: ${{ secrets.BUILDX_BAKE_GIT_AUTH_TOKEN || github.token }}
         with:
           targets: ${{ inputs.targets }}
           push: ${{ inputs.permit-login && inputs.permit-push }}
@@ -95,3 +92,4 @@ jobs:
           set: |
             ${{ inputs.permit-cache && '*.cache-from=type=gha' || ''}}
             ${{ inputs.permit-cache && '*.cache-to=type=gha,mode=min' || ''}}
+          github-token: ${{ inputs.github-token }}
