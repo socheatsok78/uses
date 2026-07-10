@@ -44,6 +44,9 @@ on:
       github-token:
         description: 'GitHub token for private repositories (default: github.token)'
         required: false
+      BUILDX_BAKE_GIT_AUTH_TOKEN:
+        description: 'Git HTTP authentication token for remote Bake files. (default: github.token)'
+        required: false
 
 jobs:
   build:
@@ -91,4 +94,4 @@ jobs:
           set: |
             ${{ inputs.permit-cache && '*.cache-from=type=gha' || ''}}
             ${{ inputs.permit-cache && '*.cache-to=type=gha,mode=min' || ''}}
-          github-token: ${{ secrets.github-token || github.token }}
+          github-token: ${{ secrets.BUILDX_BAKE_GIT_AUTH_TOKEN || secrets.github-token || github.token }}
