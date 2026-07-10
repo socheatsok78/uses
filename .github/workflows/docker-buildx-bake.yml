@@ -17,7 +17,6 @@ on:
         type: string
         description: 'List of Docker images to use as base name for tags'
         required: false
-        default: 'ghcr.io/${{ github.repository }}'
       tags:
         type: string
         description: 'List of tags as key-value pair attributes'
