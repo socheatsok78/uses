@@ -13,6 +13,10 @@ on:
         description: 'List of bake targets'
         required: false
         default: 'default'
+      flavor:
+        type: string
+        description: 'flavor defines a global behavior for tags'
+        required: false
       images:
         type: string
         description: 'List of Docker images to use as base name for tags'
@@ -64,6 +68,7 @@ jobs:
         id: docker-meta
         uses: docker/metadata-action@v6
         with:
+          flavor: ${{ inputs.flavor }}
           images: ${{ inputs.images }}
           tags: ${{ inputs.tags }}
 
