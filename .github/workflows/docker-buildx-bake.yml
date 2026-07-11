@@ -21,6 +21,10 @@ on:
         type: string
         description: 'List of Docker images to use as base name for tags'
         required: false
+      source:
+        type: string
+        description: "Context to build from. Can be either local to specify the working directory or a remote bake definition"
+        required: false
       tags:
         type: string
         description: 'List of tags as key-value pair attributes'
@@ -89,6 +93,7 @@ jobs:
       - name: Build and push
         uses: docker/bake-action@v7
         with:
+          source: ${{ inputs.source }}
           targets: ${{ inputs.targets }}
           push: ${{ inputs.permit-login && inputs.permit-push }}
           files: |
