@@ -163,7 +163,7 @@ jobs:
           sep-tags: ${{ inputs.sep-tags }}
           sep-labels: ${{ inputs.sep-labels }}
           sep-annotations: ${{ inputs.sep-annotations }}
-          bake-target: ${{ inputs.bake-target || inputs.targets }}
+          bake-target: ${{ inputs.bake-target }}
 
       - name: Generate GitHub metadata
         id: github-meta
