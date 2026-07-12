@@ -3,27 +3,15 @@ name: Docker Buildx Bake
 on:
   workflow_call:
     inputs:
-      files:
+      # docker/metadata-action
+      context:
         type: string
-        description: 'List of bake definition files'
-        required: false
-        default: './docker-bake.hcl'
-      targets:
-        type: string
-        description: 'List of bake targets'
-        required: false
-        default: 'default'
-      flavor:
-        type: string
-        description: 'flavor defines a global behavior for tags'
+        description: 'Where to get context data. Allowed options are "workflow"  (default), "git".'
+        default: "workflow"
         required: false
       images:
         type: string
         description: 'List of Docker images to use as base name for tags'
-        required: false
-      source:
-        type: string
-        description: "Context to build from. Can be either local to specify the working directory or a remote bake definition"
         required: false
       tags:
         type: string
@@ -35,6 +23,100 @@ on:
           type=semver,pattern={{major}}
           type=ref,event=branch
           type=sha
+      flavor:
+        type: string
+        description: 'Flavors to apply'
+        required: false
+      labels:
+        type: string
+        description: 'List of custom labels'
+        required: false
+      annotations:
+        type: string
+        description: 'List of custom annotations'
+        required: false
+      sep-tags:
+        type: string
+        description: 'Separator to use for tags output (default \n)'
+        required: false
+      sep-labels:
+        type: string
+        description: 'Separator to use for labels output (default \n)'
+        required: false
+      sep-annotations:
+        type: string
+        description: 'Separator to use for annotations output (default \n)'
+        required: false
+      bake-target:
+        type: string
+        description: 'Bake target name (default docker-metadata-action)'
+        required: false
+
+      # docker/bake-action
+      builder:
+        type: string
+        description: "Builder instance"
+        required: false
+      allow:
+        type: string
+        description: "Allow build to access specified resources (e.g., network.host)"
+        required: false
+      call:
+        type: string
+        description: "Set method for evaluating build (e.g., check)"
+        required: false
+      files:
+        type: string
+        description: "List of bake definition files"
+        required: false
+        default: './docker-bake.hcl'
+      no-cache:
+        type: string
+        description: "Do not use cache when building the image"
+        required: false
+        default: 'false'
+      pull:
+        type: string
+        description: "Always attempt to pull a newer version of the image"
+        required: false
+        default: 'false'
+      load:
+        type: string
+        description: "Load is a shorthand for --set=*.output=type=docker"
+        required: false
+        default: 'false'
+      provenance:
+        type: string
+        description: "Provenance is a shorthand for --set=*.attest=type=provenance"
+        required: false
+      push:
+        type: string
+        description: "Push is a shorthand for --set=*.output=type=registry"
+        required: false
+        default: 'false'
+      sbom:
+        type: string
+        description: "SBOM is a shorthand for --set=*.attest=type=sbom"
+        required: false
+      set:
+        type: string
+        description: "List of targets values to override (eg. targetpattern.key=value)"
+        required: false
+      source:
+        type: string
+        description: "Context to build from. Can be either local to specify the working directory or a remote bake definition"
+        required: false
+      targets:
+        type: string
+        description: "List of bake targets"
+        required: false
+        default: 'default'
+      vars:
+        type: string
+        description: "Variables to set in the Bake definition as list of key-value pair"
+        required: false
+
+      # Permissions
       permit-login:
         type: boolean
         default: false
@@ -72,9 +154,16 @@ jobs:
         id: docker-meta
         uses: docker/metadata-action@v6
         with:
-          flavor: ${{ inputs.flavor }}
+          context: ${{ inputs.context }}
           images: ${{ inputs.images }}
           tags: ${{ inputs.tags }}
+          flavor: ${{ inputs.flavor }}
+          labels: ${{ inputs.labels }}
+          annotations: ${{ inputs.annotations }}
+          sep-tags: ${{ inputs.sep-tags }}
+          sep-labels: ${{ inputs.sep-labels }}
+          sep-annotations: ${{ inputs.sep-annotations }}
+          bake-target: ${{ inputs.bake-target || inputs.targets }}
 
       - name: Generate GitHub metadata
         id: github-meta
@@ -93,14 +182,24 @@ jobs:
       - name: Build and push
         uses: docker/bake-action@v7
         with:
-          source: ${{ inputs.source }}
-          targets: ${{ inputs.targets }}
-          push: ${{ inputs.permit-login && inputs.permit-push }}
+          allow: ${{ inputs.allow }}
+          builder: ${{ inputs.builder }}
+          call: ${{ inputs.call }}
           files: |
             ${{ inputs.files }}
             cwd://${{ steps.docker-meta.outputs.bake-file }}
             cwd://${{ steps.github-meta.outputs.bake-file }}
+          load: ${{ inputs.load }}
+          no-cache: ${{ inputs.no-cache }}
+          provenance: ${{ inputs.provenance }}
+          pull: ${{ inputs.pull }}
+          push: ${{ inputs.permit-login && inputs.permit-push }}
+          sbom: ${{ inputs.sbom }}
           set: |
+            ${{ inputs.set }}
             ${{ inputs.permit-cache && '*.cache-from=type=gha' || ''}}
             ${{ inputs.permit-cache && '*.cache-to=type=gha,mode=min' || ''}}
+          source: ${{ inputs.source }}
+          targets: ${{ inputs.targets }}
+          vars: ${{ inputs.vars }}
           github-token: ${{ secrets.BUILDX_BAKE_GIT_AUTH_TOKEN || secrets.github-token || github.token }}
