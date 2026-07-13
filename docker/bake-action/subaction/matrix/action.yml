@@ -1,0 +1,34 @@
+name: 'Matrix'
+description: 'Generate a matrix from a Bake definition to help distributing builds in your workflow'
+
+inputs:
+  workdir:
+    description: Working directory
+    default: '.'
+    required: false
+  files:
+    description: List of Bake files
+    required: false
+  target:
+    description: Bake target
+    required: false
+  fields:
+    description: List of extra fields to include in the matrix
+    required: false
+
+outputs:
+  matrix:
+    description: Matrix configuration
+    value: ${{ steps.generate.outputs.includes }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate matrix
+      id: generate
+      uses: docker/bake-action/subaction/matrix@v7
+      with:
+        workdir: ${{ inputs.workdir }}
+        files: ${{ inputs.files }}
+        target: ${{ inputs.target }}
+        fields: ${{ inputs.fields }}
