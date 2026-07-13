@@ -1,0 +1,36 @@
+name: GitHub Metadata action
+description: GitHub Metadata Action for Docker Buildx Bake.
+author: Docker Bakery
+
+branding:
+  color: white
+  icon: git-branch
+
+inputs:
+  token:
+    description: >
+      Personal access token (PAT) used to fetch the repository. The PAT is configured
+      with the local git config, which enables your scripts to run authenticated git
+      commands. The post-job step removes the PAT.
+
+
+      We recommend using a service account with the least permissions necessary.
+      Also when generating a new PAT, select the least scopes necessary.
+
+
+      [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    default: ${{ github.token }}
+
+outputs:
+  bake-file:
+    description: Bake definition file
+    value: ${{ steps.github-meta.outputs.bake-file }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate GitHub metadata
+      id: github-meta
+      uses: dockerbakery/github-metadata-action@v5
+      with:
+        token: ${{ inputs.token }}
