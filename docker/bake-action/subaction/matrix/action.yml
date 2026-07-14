@@ -19,7 +19,7 @@ inputs:
 outputs:
   matrix:
     description: Matrix configuration
-    value: ${{ steps.generate.outputs.includes }}
+    value: ${{ fromJson(steps.generate.outputs.includes) }}
 
 runs:
   using: 'composite'
